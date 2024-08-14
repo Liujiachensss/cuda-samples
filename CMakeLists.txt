@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 3.20)
+
+
+set(CMAKE_CUDA_COMPILER "/usr/local/cuda/bin/nvcc")
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_CUDA_SEPARABLE_COMPILATION ON)
+set(CUDA_RESOLVE_DEVICE_SYMBOLS ON)
+
+
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+
+set(CMAKE_CUDA_ARCHITECTURES 86 80)
+
+set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -Xcompiler -fPIC -Xcompiler -fvisibility=hidden -rdc=true -m64")
+
+set(CUDAToolkit_ROOT /usr/local/cuda)
+project(cudaSample LANGUAGES CXX CUDA)
+
+find_package(CUDAToolkit REQUIRED)
+
+# set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -Xcompiler -fPIC")
+
+# set(CMAKE_CUDA_COMPILER_LAUNCHER ccache)
+
+# set(CMAKE_CUDA_COMPILER_WORKS TRUE)
+
+set(CMAKE_CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER})
+
+# set(CMAKE_CUDA_HOST_LINK_WORKS TRUE)
+
+# set(CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} ${CMAKE_CUDA_TOOLKIT_ROOT_DIR}/lib64)
+
+include_directories(PUBLIC 
+    Common
+    )
+
+add_subdirectory(Samples/0_Introduction)
