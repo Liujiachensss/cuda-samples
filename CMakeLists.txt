@@ -33,12 +33,15 @@ find_package(CUDAToolkit REQUIRED)
 
 set(CMAKE_CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER})
 
+# set(BUILD_RPATH TRUE)
+
 # set(CMAKE_CUDA_HOST_LINK_WORKS TRUE)
 
 # set(CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} ${CMAKE_CUDA_TOOLKIT_ROOT_DIR}/lib64)
 
 include_directories(PUBLIC 
     Common
+    /usr/local/cuda/include
     )
 
 add_subdirectory(Samples/0_Introduction)
