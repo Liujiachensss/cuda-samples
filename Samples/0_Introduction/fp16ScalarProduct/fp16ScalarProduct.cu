@@ -27,6 +27,7 @@
 
 #include "cuda_fp16.h"
 #include "helper_cuda.h"
+#include "cuUtil.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -173,8 +174,11 @@ int main(int argc, char *argv[]) {
                                cudaMemcpyHostToDevice));
   }
 
+  gpuTimer t("native");
+  t.start();
   scalarProductKernel_native<<<NUM_OF_BLOCKS, NUM_OF_THREADS>>>(
       devVec[0], devVec[1], devResults, size);
+  t.stop();
 
   checkCudaErrors(cudaMemcpy(results, devResults,
                              NUM_OF_BLOCKS * sizeof *results,
@@ -186,8 +190,11 @@ int main(int argc, char *argv[]) {
   }
   printf("Result native operators\t: %f \n", result_native);
 
+  gpuTimer t1("intrinsic");
+  t1.start();
   scalarProductKernel_intrinsics<<<NUM_OF_BLOCKS, NUM_OF_THREADS>>>(
       devVec[0], devVec[1], devResults, size);
+  t1.stop();
 
   checkCudaErrors(cudaMemcpy(results, devResults,
                              NUM_OF_BLOCKS * sizeof *results,
@@ -202,6 +209,11 @@ int main(int argc, char *argv[]) {
   printf("&&&& fp16ScalarProduct %s\n",
          (fabs(result_intrinsics - result_native) < 0.00001) ? "PASSED"
                                                              : "FAILED");
+auto show = gpuTimerShow(t, t1);
+
+  // printf("&&&& fp16ScalarProduct time native operators: %f ms\n", native_time);
+  // printf("&&&& fp16ScalarProduct time intrinsics: %f ms\n", intrinsics_time);
+  // printf("&&&& fp16ScalarProduct speedup: %f\n", native_time / intrinsics_time);
 
   for (int i = 0; i < 2; ++i) {
     checkCudaErrors(cudaFree(devVec[i]));
