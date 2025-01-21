@@ -3,3 +3,9 @@ add_executable(convolutionSeparable convolutionSeparable/main.cpp
                                     convolutionSeparable/convolutionSeparable.cu)
 target_include_directories(convolutionSeparable PUBLIC convolutionSeparable)
 target_link_libraries(convolutionSeparable PUBLIC CUDA::cudart)
+
+add_executable(convolutionTexture convolutionTexture/main.cpp 
+                                  convolutionTexture/convolutionTexture_gold.cpp 
+                                  convolutionTexture/convolutionTexture.cu)
+target_include_directories(convolutionTexture PUBLIC convolutionTexture)
+target_link_libraries(convolutionTexture PUBLIC CUDA::cudart)
