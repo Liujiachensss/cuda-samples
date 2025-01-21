@@ -1,2 +1,5 @@
 # .vscode
 build*
+.history
+bin
+deviceQuery
