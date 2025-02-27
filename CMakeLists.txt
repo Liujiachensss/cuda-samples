@@ -16,9 +16,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
-set(CMAKE_CUDA_ARCHITECTURES 86 80)
+set(CMAKE_CUDA_ARCHITECTURES 89) #89 for RTX4060 and 86 for RTX3090 and 80 for A100
 
-set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -Xcompiler -fPIC -Xcompiler -fvisibility=hidden -rdc=true -m64")
+# set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -Xcompiler -fPIC -Xcompiler -fvisibility=hidden -rdc=true -m64")
+set(CUDA_NVCC_FLAGS "-m64")
 
 set(CUDAToolkit_ROOT /usr/local/cuda)
 project(cudaSample LANGUAGES CXX CUDA)
@@ -47,3 +48,7 @@ include_directories(PUBLIC
 add_subdirectory(Samples/0_Introduction)
 add_subdirectory(Samples/1_Utilities)
 add_subdirectory(Samples/2_Concepts_and_Techniques)
+# add_subdirectory(Samples/3_CUDA_Features)
+# add_subdirectory(Samples/4_CUDA_Libraries)
+add_subdirectory(Samples/5_Domain_Specific)
+# add_subdirectory(Samples/6_Performance)
